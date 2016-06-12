@@ -34,15 +34,28 @@ public class ColorSignatureHausdorff extends FeatureFactory
 		int[] pixels = new int[h * w];
 
 		float[] featureVector = image.getFeatureVector();
+		
+		float[] fvClone = featureVector.clone();
+		
+		float max = Float.MIN_VALUE;
+		for (int i = 0; i < fvClone.length; i+=4) {
+			float curMax = fvClone[i+3];
+			if (curMax >= max) {
+				max = curMax;
+			}
+		}
+		for (int i = 0; i < fvClone.length; i+=4) {
+			fvClone[i+3] /= max;
+		}
 	
-		for (int i = 0; i < featureVector.length; i+=4) {
+		for (int i = 0; i < fvClone.length; i+=4) {
 			
-			int r = (int) featureVector[i+0];
-			int g = (int) featureVector[i+1];
-			int b = (int) featureVector[i+2];
+			int r = (int) fvClone[i+0];
+			int g = (int) fvClone[i+1];
+			int b = (int) fvClone[i+2];
 			
 			int argbValue = (0xFF << 24) | (r << 16) | (g << 8) | b;
-			float scaledAmount = featureVector[i+3];
+			float scaledAmount = fvClone[i+3];
 			
 			int drawHeight = (int) (h*scaledAmount);
 			for (int y = h-1; y > h-drawHeight; y--) {

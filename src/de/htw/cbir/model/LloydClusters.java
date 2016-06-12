@@ -94,16 +94,16 @@ public class LloydClusters {
 			featureVector[(4*i)+3] = clusterArr[i].getEntries().size();
 		}		
 		//scale entries, cause of reusage		
-		float max = 0;
-		for (int i = 3; i < featureVector.length; i+=4) {
-			float current = featureVector[i];
-			if (current > max) {
-				max = current;
-			}
-		}
-		for (int i = 3; i < featureVector.length; i+=4) {
-			featureVector[i] /= max;
-		}		
+//		float max = 0;
+//		for (int i = 3; i < featureVector.length; i+=4) {
+//			float current = featureVector[i];
+//			if (current > max) {
+//				max = current;
+//			}
+//		}
+//		for (int i = 3; i < featureVector.length; i+=4) {
+//			featureVector[i] /= max;
+//		}		
 		return featureVector;
 	}
 	
