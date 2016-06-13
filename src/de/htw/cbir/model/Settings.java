@@ -9,6 +9,8 @@ public class Settings {
 	
 	private float saturation = 1;
 	private int numOfHistogramBins = 2;
+	private int numOfNSquareClusters = 2;
+	private int numOfClusterIterations = 6;
 
 	public float getSaturation() {
 		return saturation;
@@ -16,6 +18,34 @@ public class Settings {
 	
 	
 	
+	public int getNumOfNSquareClusters() {
+		return numOfNSquareClusters;
+	}
+
+
+
+	public void setNumOfNSquareClusters(int numOfNSquareClusters) {
+		System.out.println("numOfNSquareClusters");
+		this.numOfNSquareClusters = numOfNSquareClusters;
+		fireEvent(new SettingChangeEvent(SettingOption.NUMOFNSQUAREDCLUSTERS, numOfHistogramBins));
+	}
+
+
+
+	public int getNumOfClusterIterations() {
+		return numOfClusterIterations;
+	}
+
+
+
+	public void setNumOfClusterIterations(int numOfClusterIterations) {
+		System.out.println("numOfClusterIterations");
+		this.numOfClusterIterations = numOfClusterIterations;
+		fireEvent(new SettingChangeEvent(SettingOption.CLUSTERITERATION, numOfHistogramBins));
+	}
+
+
+
 	public int getNumOfHistogramBins() {
 		return numOfHistogramBins;
 	}
@@ -23,7 +53,9 @@ public class Settings {
 
 
 	public void setNumOfHistogramBins(int numOfHistogramBins) {
+		System.out.println("setNumOfHistogramBins");
 		this.numOfHistogramBins = numOfHistogramBins;
+		fireEvent(new SettingChangeEvent(SettingOption.NUMOFHISTOGRAMMBINS, numOfHistogramBins));
 	}
 
 
@@ -41,7 +73,7 @@ public class Settings {
 	 * Alle Einstellungen die über Kontrollelement geändert werden können
 	 * brauchen eine SettingOption. Diese Identifiziert das Event.
 	 */
-	public static enum SettingOption { SATURATION };
+	public static enum SettingOption { SATURATION, NUMOFHISTOGRAMMBINS, NUMOFNSQUAREDCLUSTERS, CLUSTERITERATION };
 	
 	/**
 	 * SettingOption gibt an bei welchen Events die Listener informiert werden sollen.

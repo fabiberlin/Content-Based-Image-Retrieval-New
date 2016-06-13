@@ -141,8 +141,7 @@ public class CBIRController {
 		else if(name.equalsIgnoreCase("HistogramFeature")) {
 			featureFactory = new HistogramFeature(settings);
 			
-			// wenn sich die Saturation ändert berechne alle Feature Vektoren neu 
-			settings.addChangeListener(Settings.SettingOption.SATURATION, (SettingChangeEvent event) -> {
+			settings.addChangeListener(Settings.SettingOption.NUMOFHISTOGRAMMBINS, (SettingChangeEvent event) -> {
 				calculateFeatureVectors(featureFactory, imageManager.getImages());
 			});
 		}
@@ -150,8 +149,10 @@ public class CBIRController {
 		else if(name.equalsIgnoreCase("ColorSignatureHausdorff")) {
 			featureFactory = new ColorSignatureHausdorff(settings);
 			
-			// wenn sich die Saturation ändert berechne alle Feature Vektoren neu 
-			settings.addChangeListener(Settings.SettingOption.SATURATION, (SettingChangeEvent event) -> {
+			settings.addChangeListener(Settings.SettingOption.CLUSTERITERATION, (SettingChangeEvent event) -> {
+				calculateFeatureVectors(featureFactory, imageManager.getImages());
+			});
+			settings.addChangeListener(Settings.SettingOption.NUMOFNSQUAREDCLUSTERS, (SettingChangeEvent event) -> {
 				calculateFeatureVectors(featureFactory, imageManager.getImages());
 			});
 		}
@@ -160,7 +161,10 @@ public class CBIRController {
 			featureFactory = new ColorSignaturePHMD(settings);
 			
 			// wenn sich die Saturation ändert berechne alle Feature Vektoren neu 
-			settings.addChangeListener(Settings.SettingOption.SATURATION, (SettingChangeEvent event) -> {
+			settings.addChangeListener(Settings.SettingOption.CLUSTERITERATION, (SettingChangeEvent event) -> {
+				calculateFeatureVectors(featureFactory, imageManager.getImages());
+			});
+			settings.addChangeListener(Settings.SettingOption.NUMOFNSQUAREDCLUSTERS, (SettingChangeEvent event) -> {
 				calculateFeatureVectors(featureFactory, imageManager.getImages());
 			});
 		}

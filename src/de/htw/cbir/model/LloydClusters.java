@@ -8,11 +8,15 @@ public class LloydClusters {
 	
 	ArrayList<Cluster> clusters;
 	ArrayList<ColorValue> allColorValues;
-	int numOfClusterSplits = 3;
-	int numOfIterations = 5;
+	int numOfClusterSplits;
+	int numOfIterations;
+	private Settings settings;
 
-	public LloydClusters(int[] pic) {
+	public LloydClusters(int[] pic, Settings settings) {
 		super();
+		this.settings = settings;
+		this.numOfClusterSplits = settings.getNumOfNSquareClusters();
+		this.numOfIterations = settings.getNumOfClusterIterations();
 		this.clusters = new ArrayList<>();
 		Cluster cluster = new Cluster();
 		cluster.setColorValuesFromArray(pic);
@@ -34,6 +38,7 @@ public class LloydClusters {
 				this.calcCenterpoints();
 			}
 		}
+		System.out.println("Clustering Done");
 	}
 	
 	public void calcCenterpoints() {
@@ -81,7 +86,7 @@ public class LloydClusters {
 	}
 	
 	public float[] toFeatureVector() {
-		float[] featureVector = new float[4*(numOfClusterSplits*numOfClusterSplits-1)];
+		float[] featureVector = new float[(int) (4*(Math.pow(2, numOfClusterSplits)))];
 
 		Cluster[] clusterArr = this.clusters.toArray(new Cluster[clusters.size()]);
 		

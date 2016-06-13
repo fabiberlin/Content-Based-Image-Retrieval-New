@@ -107,6 +107,47 @@ public class CBIRView  {
 		});
 		m_satValue.add(satSlider);
 		settingsMenu.add(m_satValue);
+
+		// Menupunkt "Histogramm Bins"
+		JMenu m_binValue = new JMenu("Histogramm Bins");
+		final JSliderDecimal binSlider = JSliderDecimal.createDoubleJSlider(1.0, 5.0, 2.0, 0);
+		binSlider.setMajorTickSpacing(1.0);
+		binSlider.setPaintTicks(true);
+		binSlider.setPaintLabels(true);
+		binSlider.addChangeListener((ChangeEvent e) -> { 
+			if(!binSlider.getValueIsAdjusting()) 
+				controller.getSettings().setNumOfHistogramBins((int) binSlider.getDecimalValue()); 
+		});
+		m_binValue.add(binSlider);
+		settingsMenu.add(m_binValue);
+
+		// Menupunkt "ClusterIterations"
+		JMenu m_clusterIterationsValue = new JMenu("Cluster Iterations");
+		final JSliderDecimal clusterIterationSlider = JSliderDecimal.createDoubleJSlider(1.0, 12.0, 6.0, 0);
+		clusterIterationSlider.setMajorTickSpacing(1.0);
+		clusterIterationSlider.setPaintTicks(true);
+		clusterIterationSlider.setPaintLabels(true);
+		clusterIterationSlider.addChangeListener((ChangeEvent e) -> { 
+			if(!clusterIterationSlider.getValueIsAdjusting()) 
+				controller.getSettings().setNumOfClusterIterations((int) clusterIterationSlider.getDecimalValue()); 
+		});
+		m_clusterIterationsValue.add(clusterIterationSlider);
+		settingsMenu.add(m_clusterIterationsValue);
+
+		// Menupunkt "N² Cluster"
+		JMenu m_numClustersValue = new JMenu("N² Clusters");
+		final JSliderDecimal numClustersSlider = JSliderDecimal.createDoubleJSlider(1.0, 5.0, 2.0, 0);
+		numClustersSlider.setMajorTickSpacing(1.0);
+		numClustersSlider.setPaintTicks(true);
+		numClustersSlider.setPaintLabels(true);
+		numClustersSlider.addChangeListener((ChangeEvent e) -> { 
+			if(!numClustersSlider.getValueIsAdjusting()) 
+				controller.getSettings().setNumOfNSquareClusters((int) numClustersSlider.getDecimalValue()); 
+		});
+		m_numClustersValue.add(numClustersSlider);
+		settingsMenu.add(m_numClustersValue);
+		
+		
 		
 		menuBar.add(settingsMenu);
 		

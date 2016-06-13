@@ -26,7 +26,7 @@ public class ColorSignaturePHMD extends FeatureFactory
 	//
 	@Override
 	public BufferedImage getFeatureImage(Pic image) {
-		int w = 8;
+		int w = (int) Math.pow(2, settings.getNumOfNSquareClusters());
 		int h = 100;
 
 		BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
@@ -84,14 +84,10 @@ public class ColorSignaturePHMD extends FeatureFactory
 
 		bi.getRGB(0, 0, width, height, rgbValues, 0, width);
 
-		LloydClusters lloydClusters = new LloydClusters(rgbValues);
+		LloydClusters lloydClusters = new LloydClusters(rgbValues, settings);
 		lloydClusters.runLloydClustering();
 
 		return lloydClusters.toFeatureVector();
-	}
-	
-	private float getSaturationSetting() {
-		return settings.getSaturation();
 	}
 	
 	@Override
