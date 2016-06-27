@@ -3,6 +3,8 @@ package de.htw.cbir.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LloydClusters {
 	
@@ -38,7 +40,7 @@ public class LloydClusters {
 				this.calcCenterpoints();
 			}
 		}
-		System.out.println("Clustering Done");
+		Logger.getGlobal().log(Level.INFO, "Clustering Done");
 	}
 	
 	public void calcCenterpoints() {
@@ -89,26 +91,13 @@ public class LloydClusters {
 		float[] featureVector = new float[(int) (4*(Math.pow(2, numOfClusterSplits)))];
 
 		Cluster[] clusterArr = this.clusters.toArray(new Cluster[clusters.size()]);
-		
-//		Arrays.sort(clusterArr);
 
 		for (int i = 0; i < clusterArr.length; i++) {
 			featureVector[(4*i)+0] = clusterArr[i].centerPoint.r;
 			featureVector[(4*i)+1] = clusterArr[i].centerPoint.g;
 			featureVector[(4*i)+2] = clusterArr[i].centerPoint.b;
 			featureVector[(4*i)+3] = clusterArr[i].getEntries().size();
-		}		
-		//scale entries, cause of reusage		
-//		float max = 0;
-//		for (int i = 3; i < featureVector.length; i+=4) {
-//			float current = featureVector[i];
-//			if (current > max) {
-//				max = current;
-//			}
-//		}
-//		for (int i = 3; i < featureVector.length; i+=4) {
-//			featureVector[i] /= max;
-//		}		
+		}			
 		return featureVector;
 	}
 	

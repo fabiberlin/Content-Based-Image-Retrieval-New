@@ -25,7 +25,6 @@ public class Settings {
 
 
 	public void setNumOfNSquareClusters(int numOfNSquareClusters) {
-		System.out.println("numOfNSquareClusters");
 		this.numOfNSquareClusters = numOfNSquareClusters;
 		fireEvent(new SettingChangeEvent(SettingOption.NUMOFNSQUAREDCLUSTERS, numOfHistogramBins));
 	}
@@ -39,7 +38,6 @@ public class Settings {
 
 
 	public void setNumOfClusterIterations(int numOfClusterIterations) {
-		System.out.println("numOfClusterIterations");
 		this.numOfClusterIterations = numOfClusterIterations;
 		fireEvent(new SettingChangeEvent(SettingOption.CLUSTERITERATION, numOfHistogramBins));
 	}
@@ -53,7 +51,6 @@ public class Settings {
 
 
 	public void setNumOfHistogramBins(int numOfHistogramBins) {
-		System.out.println("setNumOfHistogramBins");
 		this.numOfHistogramBins = numOfHistogramBins;
 		fireEvent(new SettingChangeEvent(SettingOption.NUMOFHISTOGRAMMBINS, numOfHistogramBins));
 	}

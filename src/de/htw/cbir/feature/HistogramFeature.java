@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 
 import de.htw.cbir.model.Histogram;
 import de.htw.cbir.model.Histogram.HistoValue;
+import de.htw.cbir.model.ImageProcessingHelper;
 import de.htw.cbir.model.Pic;
 import de.htw.cbir.model.Settings;
 

@@ -21,6 +21,7 @@ public class ColorMean extends FeatureFactory {
 
 		int w = 1;
 		int h = 1;
+		
 
 		BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D big = bi.createGraphics();
