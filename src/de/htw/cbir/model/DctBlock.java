@@ -4,8 +4,8 @@ public class DctBlock {
 	
 	static final int DIM = 8;
 	
-	int[][] argb;
-	float[][] coeffs;
+	private int[][] argb;
+	private float[][] coeffs;
 	
 	public DctBlock (int[][] argbValues){
 		this.argb = argbValues;
@@ -22,8 +22,8 @@ public class DctBlock {
 				for (int m = 0; m < DIM; m++) {
 					for (int n = 0; n < DIM; n++) {
 						int arbgValue = argb[m][n];
-						float left = (float) Math.cos(Math.PI/16*(2*m+1)*k);
-						float right = (float) Math.cos(Math.PI/16*(2*n+1)*l);
+						float left = (float) Math.cos(Math.PI/16*(2*m+1)*k); //TODO
+						float right = (float) Math.cos(Math.PI/16*(2*n+1)*l); //TODO
 						sum += arbgValue*left*right;
 					}
 				}
@@ -38,5 +38,9 @@ public class DctBlock {
 		} else {
 			return (float) Math.sqrt(0.25);
 		}
+	}
+	
+	public float getCoeff (int x, int y){
+		return coeffs[x][y];
 	}
 }

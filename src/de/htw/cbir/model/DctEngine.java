@@ -7,7 +7,12 @@ public class DctEngine {
 	int width;
 	int height;
 	DctBlock[] dctBlocks;
+	float[] histo;
 	
+	public float[] getHisto() {
+		return histo;
+	}
+
 	public DctEngine(int[] argb, int width, int height) {
 		this.origArgb = argb;
 		this.width = width;
@@ -39,7 +44,8 @@ public class DctEngine {
 				int[][] argbBlock = getBlock(xOffset, yOffset, dim);
 				DctBlock dctBlock = new DctBlock(argbBlock);
 				dctBlock.calcCoeffs();
-				dctBlocks[blockIndex] = dctBlock;				
+				dctBlocks[blockIndex] = dctBlock;			
+				blockIndex++;
 			}
 		}
 	}
@@ -55,8 +61,32 @@ public class DctEngine {
 	}
 	
 	public void generateHistogram (){
-		
+		histo = new float[63];
+		for (int x = 0; x < DctBlock.DIM; x++) {
+			for (int y = 0; y < DctBlock.DIM; y++) {
+				// for num Of Blocks
+				if (x == 0 && y == 0) {
+					//bias ignore
+				} else {
+					histo[y*DctBlock.DIM + x - 1] = 0;
+					for (int i = 0; i < dctBlocks.length; i++) {
+						histo[y*DctBlock.DIM + x -1] += Math.abs(this.dctBlocks[i].getCoeff(x, y));
+					}
+				}
+			}
+		}
 	}
 	
-
+	public void normalizeHistogram() {
+		float max = Float.MIN_VALUE;
+		for (int i = 0; i < histo.length; i++) {
+			float current = histo[i];
+			if (current > max) {
+				max = current;
+			}
+		}
+		for (int i = 0; i < histo.length; i++) {
+			histo[i] /= max;
+		}
+	}
 }

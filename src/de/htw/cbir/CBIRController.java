@@ -8,6 +8,7 @@ import de.htw.cbir.feature.ColorMean;
 import de.htw.cbir.feature.ColorMeanSaturation;
 import de.htw.cbir.feature.ColorSignatureHausdorff;
 import de.htw.cbir.feature.ColorSignaturePHMD;
+import de.htw.cbir.feature.DctHistogramFeature;
 import de.htw.cbir.feature.EdgeHistogramFeature;
 import de.htw.cbir.feature.FeatureFactory;
 import de.htw.cbir.feature.HistogramFeature;
@@ -117,7 +118,8 @@ public class CBIRController {
 	 */
 	public String[] getFeatureFactoryNames() {
 		return new String[] { "ColorMean", "ColorMeanSaturation", "HistogramFeature", 
-				"ColorSignatureHausdorff", "ColorSignaturePHMD", "EdgeHistogramFeature" };
+				"ColorSignatureHausdorff", "ColorSignaturePHMD", "EdgeHistogramFeature",
+				"DctHistogramFeature"};
 	}
 	
 	/**
@@ -174,7 +176,9 @@ public class CBIRController {
 		else if(name.equalsIgnoreCase("EdgeHistogramFeature")) {
 			featureFactory = new EdgeHistogramFeature(settings);
 		}
-		
+		else if(name.equalsIgnoreCase("DctHistogramFeature")) {
+			featureFactory = new DctHistogramFeature(settings);
+		}
 		// erzeuge die Feature Vektoren
 		if(featureFactory != null)
 			calculateFeatureVectors(featureFactory, imageManager.getImages());
