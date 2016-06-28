@@ -23,7 +23,7 @@ public abstract class EdgeFilter {
 				filtered[filteredIndex] = sum;
 				filteredIndex++;
 			}
-		}		
+		}
 		return filtered;
 	}
 }

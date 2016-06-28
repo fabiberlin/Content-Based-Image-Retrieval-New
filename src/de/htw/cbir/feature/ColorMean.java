@@ -13,9 +13,6 @@ public class ColorMean extends FeatureFactory {
 		super(settings);
 	}
 
-	///////////////////////////////////////////
-	// visualize the feature data as image
-	//
 	@Override
 	public BufferedImage getFeatureImage(Pic image) {
 
