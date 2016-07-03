@@ -41,7 +41,16 @@ public abstract class FeatureFactory {
 			dist += buff * buff;
 		}
 		return dist;
-	}	
+	}
+	
+	public static float getSquaredChordDistance(float[] val1, float[] val2){
+		float dist = 0;
+		for (int i = 0; i < val2.length; i++) {
+			double buff = Math.sqrt(val1[i]) - Math.sqrt(val2[i]);
+			dist += buff*buff;
+		}
+		return dist;
+	}
 	
 	/**
 	 * Visualisiere den Feature Vektor für ein Bild

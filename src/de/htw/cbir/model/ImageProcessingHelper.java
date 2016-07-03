@@ -1,5 +1,6 @@
 package de.htw.cbir.model;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 /**
@@ -239,5 +240,24 @@ public abstract class ImageProcessingHelper {
 	public static String doubleToString(double d){
 		return String.format(Locale.US, "%.2f", d);
 	}
+	
+	/**
+	 * from https://stackoverflow.com/questions/80476/how-can-i-concatenate-two-arrays-in-java
+	 * @param first
+	 * @param second
+	 * @return
+	 */
+	public static <T> T[] concat(T[] first, T[] second) {
+		T[] result = Arrays.copyOf(first, first.length + second.length);
+		System.arraycopy(second, 0, result, first.length, second.length);
+		return result;
+	}
+
+	public static float[] concat(float[] first, float[] second) {
+		float[] result = Arrays.copyOf(first, first.length + second.length);
+		System.arraycopy(second, 0, result, first.length, second.length);
+		return result;
+	}
+
 	
 }

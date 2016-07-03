@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import de.htw.cbir.evaluation.CBIREvaluation;
 import de.htw.cbir.evaluation.PrecisionRecallTable;
+import de.htw.cbir.feature.BaenschFeature;
 import de.htw.cbir.feature.ColorMean;
 import de.htw.cbir.feature.ColorMeanSaturation;
 import de.htw.cbir.feature.ColorSignatureHausdorff;
@@ -119,7 +120,7 @@ public class CBIRController {
 	public String[] getFeatureFactoryNames() {
 		return new String[] { "ColorMean", "ColorMeanSaturation", "HistogramFeature", 
 				"ColorSignatureHausdorff", "ColorSignaturePHMD", "EdgeHistogramFeature",
-				"DctHistogramFeature"};
+				"DctHistogramFeature", "BaenschFeature"};
 	}
 	
 	/**
@@ -178,6 +179,9 @@ public class CBIRController {
 		}
 		else if(name.equalsIgnoreCase("DctHistogramFeature")) {
 			featureFactory = new DctHistogramFeature(settings);
+		}
+		else if(name.equalsIgnoreCase("BaenschFeature")) {
+			featureFactory = new BaenschFeature(settings);
 		}
 		// erzeuge die Feature Vektoren
 		if(featureFactory != null)

@@ -95,7 +95,7 @@ public class HistogramFeature extends FeatureFactory
 	
 	@Override
 	public float getDistance(float[] fv1, float[] fv2) {
-		return getL1Distance(fv1, fv2);
+		return getSquaredChordDistance(fv1, fv2);
 	}
 
 	@Override

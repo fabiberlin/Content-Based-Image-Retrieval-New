@@ -17,7 +17,7 @@ public class EdgeHistogram {
 
 	public EdgeHistogram(Pic pic) {
 		
-		System.out.println("Start EdgeHistogram");
+		//System.out.println("Start EdgeHistogram");
 		
 		BufferedImage bi = pic.getDisplayImage();
 		int width  = bi.getWidth();
