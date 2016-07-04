@@ -258,6 +258,19 @@ public abstract class ImageProcessingHelper {
 		System.arraycopy(second, 0, result, first.length, second.length);
 		return result;
 	}
+	
+	public static float[] normalize (float[] input){
+		float[] result = new float[input.length];
+		float dist = 0;
+		for (int i = 0; i < input.length; i++) {
+			dist += input[i]*input[i];
+		}
+		dist = (float) Math.sqrt(dist);
+		for (int i = 0; i < input.length; i++) {
+			result[i] = input[i]/dist;
+		}
+		return result;
+	}
 
 	
 }

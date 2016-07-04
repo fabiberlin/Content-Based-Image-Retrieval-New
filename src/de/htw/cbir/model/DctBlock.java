@@ -34,14 +34,6 @@ public class DctBlock {
 		}
 	}
 	
-	private float getCi(int i){
-		if (i==0) {
-			return (float) Math.sqrt(0.125);
-		} else {
-			return (float) Math.sqrt(0.25);
-		}
-	}
-	
 	public float getCoeff (int x, int y){
 		return coeffs[x][y];
 	}

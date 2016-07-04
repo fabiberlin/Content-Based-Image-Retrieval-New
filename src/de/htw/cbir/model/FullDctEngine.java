@@ -18,20 +18,25 @@ public class FullDctEngine {
 		this.origArgb = argb;
 		this.width = width;
 		this.height = height;
-		
-		if (width<=height) {
-			this.dim = width;
-		}else{
-			this.dim = height;
-		}
 		initProcessedArgb();
 	}
 
 	private void initProcessedArgb() {
+		float widthScale = 1;
+		float heightScale = 1;
+		if (width<=height) {
+			this.dim = width;
+			heightScale = height/new Float(width);
+			
+		}else{
+			this.dim = height;
+			widthScale = width/new Float(height);
+		}
+		
 		this.processedArgb = new int[this.dim][this.dim];
 		for (int y = 0; y < this.dim; y++) {
 			for (int x = 0; x < this.dim; x++) {
-				int pos = y*this.width+x;
+				int pos = (int) ((y*heightScale)*this.width+(x*widthScale));
 				int greyValue = (((origArgb[pos] >> 16) & 0xff)
 						+ ((origArgb[pos] >> 8) & 0xff) + (origArgb[pos] & 0xff)) / 3;
 				processedArgb[x][y] = greyValue;
@@ -85,7 +90,7 @@ public class FullDctEngine {
 		}
 	}
 	
-	public float compareFeatureVectors (float[] fv1, float[] fv2){
+	public static float compareFeatureVectors (float[] fv1, float[] fv2){
 		int fvCounter = 0;
 		float fv1E[][] = new float[4][];
 		float fv2E[][] = new float[4][];
@@ -100,6 +105,21 @@ public class FullDctEngine {
 			}
 		}
 		
-		return 0;
+		float wheights[] = FullDctFeatureRegion.wheights;
+		float sum = 0;
+		for (int i = 0; i < fv1E.length; i++) {
+			float value = wheights[i] * squaredDifferences(fv1E[i], fv2E[i]);
+			sum += value;
+		}
+		return sum;
+	}
+	
+	public static float squaredDifferences (float[] fv1, float[] fv2){
+		float sum = 0;
+		for (int i = 0; i < fv2.length; i++) {
+			sum += (fv1[i]-fv2[i])*(fv1[i]-fv2[i]);
+		}
+//		System.out.println("Compared "+sum);
+		return sum;
 	}
 }

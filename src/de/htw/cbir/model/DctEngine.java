@@ -61,18 +61,16 @@ public class DctEngine {
 	}
 	
 	public void generateHistogram (){
-		histo = new float[63];
+		histo = new float[64];
 		for (int x = 0; x < DctBlock.DIM; x++) {
 			for (int y = 0; y < DctBlock.DIM; y++) {
 				// for num Of Blocks
-				if (x == 0 && y == 0) {
-					//bias ignore
-				} else {
-					histo[y*DctBlock.DIM + x - 1] = 0;
-					for (int i = 0; i < dctBlocks.length; i++) {
-						histo[y*DctBlock.DIM + x -1] += Math.abs(this.dctBlocks[i].getCoeff(x, y));
-					}
+				histo[y*DctBlock.DIM + x ] = 0;
+				for (int i = 0; i < dctBlocks.length; i++) {
+					histo[y*DctBlock.DIM + x] += this.dctBlocks[i].getCoeff(x, y);
+				
 				}
+				//histo[y*DctBlock.DIM + x] /= this.dctBlocks.length;
 			}
 		}
 	}

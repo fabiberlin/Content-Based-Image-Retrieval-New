@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 import de.htw.cbir.model.DctEngine;
 import de.htw.cbir.model.EdgeHistogram;
+import de.htw.cbir.model.FullDctEngine;
 import de.htw.cbir.model.Histogram;
 import de.htw.cbir.model.Histogram.HistoValue;
 import de.htw.cbir.model.Pic;
@@ -51,7 +52,7 @@ public class DctHistogramFeature extends FeatureFactory
 		DctEngine dctEngine = new DctEngine(rgbValues, width, height);
 		dctEngine.runDct();
 		dctEngine.generateHistogram();
-		dctEngine.normalizeHistogram();
+		//dctEngine.normalizeHistogram();
 		float[] featureVector = dctEngine.getHisto();
 		System.out.println(Arrays.toString(featureVector));
 		return featureVector;
@@ -60,7 +61,7 @@ public class DctHistogramFeature extends FeatureFactory
 	
 	@Override
 	public float getDistance(float[] fv1, float[] fv2) {
-		return getL1Distance(fv1, fv2);
+		return FullDctEngine.squaredDifferences(fv1, fv2);
 	}
 
 	@Override

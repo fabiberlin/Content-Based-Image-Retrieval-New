@@ -30,7 +30,7 @@ public class FullDctBlock {
 						sum += arbgValue*left*right;
 					}
 				}
-				float value = (2/new Float(dim))*ck*ci*sum;
+				float value = ((2*ck*ci*sum)/(dim*dim));
 				coeffs[u][v] = value;
 			}
 		}

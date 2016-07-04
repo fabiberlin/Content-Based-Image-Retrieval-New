@@ -45,6 +45,6 @@ public class FullDctFeatureRegion {
 	};
 	
 	public static final float[] wheights = {
-			0.5f, 0.5f, 0.5f, 0.5f
+			0.25f, 0.25f, 0.25f, 0.25f
 	};
 }
