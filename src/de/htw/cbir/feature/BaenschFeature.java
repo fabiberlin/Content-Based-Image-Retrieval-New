@@ -2,10 +2,12 @@ package de.htw.cbir.feature;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.lang.reflect.Array;
 import java.util.Arrays;
 
 import de.htw.cbir.model.DctEngine;
 import de.htw.cbir.model.EdgeHistogram;
+import de.htw.cbir.model.FullDctEngine;
 import de.htw.cbir.model.Histogram;
 import de.htw.cbir.model.Histogram.HistoValue;
 import de.htw.cbir.model.ImageProcessingHelper;
@@ -49,24 +51,25 @@ public class BaenschFeature extends FeatureFactory
 		int [] rgbValues = new int[width * height];
 		bi.getRGB(0, 0, width, height, rgbValues, 0, width);
 		
-		DctEngine dctEngine = new DctEngine(rgbValues, width, height);
+		FullDctEngine dctEngine = new FullDctEngine(rgbValues, width, height);
 		dctEngine.runDct();
 		dctEngine.generateHistogram();
-		dctEngine.normalizeHistogram();
+//		dctEngine.normalizeHistogram();
 		float[] dctFeature = dctEngine.getHisto();
-
-		EdgeHistogram edgeHistogram = new EdgeHistogram(image);
-		float[] edgeFeature = edgeHistogram.getNormalizedHistogram();
-		
-		float[] finalFeature = ImageProcessingHelper.concat(dctFeature, edgeFeature);
-		
-		return finalFeature;
+//
+//		EdgeHistogram edgeHistogram = new EdgeHistogram(image);
+//		float[] edgeFeature = edgeHistogram.getNormalizedHistogram();
+//		//
+//		float[] finalFeature = ImageProcessingHelper.concat(dctFeature, edgeFeature);
+//		
+		System.out.println(Arrays.toString(dctFeature));
+		return dctFeature;
 	}
 	
 	
 	@Override
 	public float getDistance(float[] fv1, float[] fv2) {
-		return getSquaredChordDistance(fv1, fv2);
+		return getL2Distance(fv1, fv2);
 	}
 
 	@Override
