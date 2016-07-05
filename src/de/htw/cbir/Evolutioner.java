@@ -23,28 +23,34 @@ public class Evolutioner {
 		PicManager imageManager = new PicManager();
 		imageManager.loadImages(imageDirectory);		
 		FeatureFactory featureFactory = new BaenschFeature(settings);
+		for (Pic image : imageManager.getImages()) {
+			image.setFeatureVector(featureFactory.getFeatureVector(image));
+			image.setFeatureImage(featureFactory.getFeatureImage(image));			
+		}
 		
 		float[] previousValues = Arrays.copyOf(BaenschFeature.featureWheights, BaenschFeature.featureWheights.length);
 		float[] adjustedValues = Arrays.copyOf(BaenschFeature.featureWheights, BaenschFeature.featureWheights.length);
 		
 		float bestMAP = getMAP(imageManager, featureFactory);
 		
-		for (int i = 0; i < 200; i++) {
+		for (int i = 0; i < 20000; i++) {
 			for (int j = 0; j < adjustedValues.length; j++) {
 				adjustedValues[j] = createNewValue(previousValues[j]);
 			}
 			BaenschFeature.featureWheights = adjustedValues;
-			System.out.println("Wheights: " + Arrays.toString(BaenschFeature.featureWheights));
+			System.out.println("Wheights to Check: " + Arrays.toString(BaenschFeature.featureWheights));
 			float currentMAP = getMAP(imageManager, featureFactory);
-			System.out.println("--> MAP: "+currentMAP);
+			System.out.println("--> calced MAP: "+currentMAP);
 			if (currentMAP >= bestMAP) {
 				// its ok
-				System.out.println("Changed Wheights");
-				previousValues = adjustedValues;
+				System.out.println("Changed Wheights ( " + currentMAP + " >= " + bestMAP + " )");
+				previousValues = Arrays.copyOf(adjustedValues,adjustedValues.length);
+				bestMAP = currentMAP;
 			} else {
 				//do nothing	
-				System.out.println("Didnt Changed Wheights");
+				System.out.println("Didnt Changed Wheights ( " + currentMAP + " < " + bestMAP + " )");
 			}
+			System.out.println("Best Wheights for now: "+Arrays.toString(previousValues));
 			System.out.println();
 			
 		}
@@ -55,14 +61,11 @@ public class Evolutioner {
 	}
 	
 	private static float createNewValue(float old){
-		return (float) (old + 0.1 * old * (Math.random()*2-1));
+		return (float) (old + 0.05 * old * (Math.random()*2-1));
 	}
 
 	private static float getMAP(PicManager imageManager, FeatureFactory featureFactory) {
-		for (Pic image : imageManager.getImages()) {
-			image.setFeatureVector(featureFactory.getFeatureVector(image));
-			image.setFeatureImage(featureFactory.getFeatureImage(image));			
-		}
+		
 		Pic[] allImages = imageManager.getImages();
 		CBIREvaluation eval = new CBIREvaluation(featureFactory, allImages);
 		float map = eval.test(allImages, false, "Testing all images");

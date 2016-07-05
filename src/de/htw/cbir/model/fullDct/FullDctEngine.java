@@ -37,8 +37,11 @@ public class FullDctEngine {
 		for (int y = 0; y < this.dim; y++) {
 			for (int x = 0; x < this.dim; x++) {
 				int pos = (int) ((y*heightScale)*this.width+(x*widthScale));
-				int greyValue = (((origArgb[pos] >> 16) & 0xff)
-						+ ((origArgb[pos] >> 8) & 0xff) + (origArgb[pos] & 0xff)) / 3;
+				int greyValue = (int) 
+						(0.299 * ((origArgb[pos] >> 16) & 0xff) + 
+						 0.587 * ((origArgb[pos] >> 8) & 0xff) + 
+						 0.114 * (origArgb[pos] & 0xff));
+				
 				processedArgb[x][y] = greyValue;
 			}
 		}

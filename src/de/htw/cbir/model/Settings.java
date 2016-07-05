@@ -9,8 +9,8 @@ public class Settings {
 	
 	private float saturation = 1;
 	private int numOfHistogramBins = 2;
-	private int numOfNSquareClusters = 2;
-	private int numOfClusterIterations = 2;
+	private int numOfNSquareClusters = 3;
+	private int numOfClusterIterations = 6;
 
 	public float getSaturation() {
 		return saturation;

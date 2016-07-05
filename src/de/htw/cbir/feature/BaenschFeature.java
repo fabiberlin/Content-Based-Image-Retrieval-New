@@ -18,7 +18,7 @@ import de.htw.cbir.model.Settings;
 
 public class BaenschFeature extends FeatureFactory
 {
-	public static float[] featureWheights = {1,5,400};
+	public static float[] featureWheights = {0.47719234f, 3.4003713f, 579.69147f};
 
 	public BaenschFeature(Settings settings) {
 		super(settings);
