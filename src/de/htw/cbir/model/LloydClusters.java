@@ -12,13 +12,11 @@ public class LloydClusters {
 	ArrayList<ColorValue> allColorValues;
 	int numOfClusterSplits;
 	int numOfIterations;
-	private Settings settings;
 
-	public LloydClusters(int[] pic, Settings settings) {
+	public LloydClusters(int[] pic) {
 		super();
-		this.settings = settings;
-		this.numOfClusterSplits = settings.getNumOfNSquareClusters();
-		this.numOfIterations = settings.getNumOfClusterIterations();
+		this.numOfClusterSplits = Settings.numOfNSquareClusters;
+		this.numOfIterations = Settings.numOfClusterIterations;
 		this.clusters = new ArrayList<>();
 		Cluster cluster = new Cluster();
 		cluster.setColorValuesFromArray(pic);

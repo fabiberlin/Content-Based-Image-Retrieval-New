@@ -1,5 +1,7 @@
 package de.htw.cbir.model.fullDct;
 
+import java.util.Arrays;
+
 public class FullDctEngine {
 	
 	int[] origArgb;
@@ -108,7 +110,8 @@ public class FullDctEngine {
 			}
 		}
 		
-		float wheights[] = FullDctFeatureRegion.wheights;
+		float wheights[] = FullDctFeatureRegion.dctWheights;
+		//System.out.println(Arrays.toString(wheights));
 		float sum = 0;
 		for (int i = 0; i < fv1E.length; i++) {
 			float value = wheights[i] * squaredDifferences(fv1E[i], fv2E[i]);

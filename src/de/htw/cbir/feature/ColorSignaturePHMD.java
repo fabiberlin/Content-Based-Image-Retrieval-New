@@ -84,7 +84,7 @@ public class ColorSignaturePHMD extends FeatureFactory
 
 		bi.getRGB(0, 0, width, height, rgbValues, 0, width);
 
-		LloydClusters lloydClusters = new LloydClusters(rgbValues, settings);
+		LloydClusters lloydClusters = new LloydClusters(rgbValues);
 		lloydClusters.runLloydClustering();
 
 		return lloydClusters.toFeatureVector();

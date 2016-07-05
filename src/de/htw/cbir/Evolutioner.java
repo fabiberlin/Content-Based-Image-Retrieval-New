@@ -33,7 +33,7 @@ public class Evolutioner {
 		
 		float bestMAP = getMAP(imageManager, featureFactory);
 		
-		for (int i = 0; i < 20000; i++) {
+		for (int i = 0; i < 2000; i++) {
 			for (int j = 0; j < adjustedValues.length; j++) {
 				adjustedValues[j] = createNewValue(previousValues[j]);
 			}
@@ -58,6 +58,9 @@ public class Evolutioner {
 		float finalMap = getMAP(imageManager, featureFactory);
 		System.out.println("Final MAP: "+finalMap+" Wheights: "+Arrays.toString(BaenschFeature.featureWheights));
 	
+		//
+		// Final MAP: 0.55638903 Wheights: [6.033855, 0.037183005, 9042.364]
+		//
 	}
 	
 	private static float createNewValue(float old){

@@ -1,17 +1,5 @@
 package de.htw.cbir.model;
 
-//Find max distance from A to B (d(A,B))
-//For each Point in A
-	//for each Point in B
-		//calc distance
-	//save the min distance to each point in A to B
-// (d(A,B)) = max of the distances in A
-
-//Find max distance form B to A (d(A,B))
-	//analog
-
-
-
 public class HausdorffMetric {
 	ColorValue[] valuesA;
 	ColorValue[] valuesB;

@@ -34,6 +34,7 @@ public class Cluster implements Comparable<Cluster>{
 			b += colorValue.b;
 			sum++;
 		}
+		if(sum==0) sum=1;
 		this.centerPoint = new ColorValue(r/sum, g/sum, b/sum);
 	}
 	

@@ -48,7 +48,9 @@ public class EdgeHistogram {
 					maxIndex = j;
 				}
 			}
-			histogram[maxIndex]++;
+			if (maxValue >= Settings.edgeThreshold) {
+				histogram[maxIndex]++;
+			}			
 		}
 		
 		//normalize;

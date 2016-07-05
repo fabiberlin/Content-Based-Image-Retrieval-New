@@ -18,7 +18,7 @@ import de.htw.cbir.model.Settings;
 
 public class BaenschFeature extends FeatureFactory
 {
-	public static float[] featureWheights = {0.47719234f, 3.4003713f, 579.69147f};
+	public static float[] featureWheights = {6.033855f, 0.037183005f, 9042.364f};
 
 	public BaenschFeature(Settings settings) {
 		super(settings);
@@ -80,7 +80,7 @@ public class BaenschFeature extends FeatureFactory
 		float[] edgeFeature = edgeHistogram.getHistogram();
 		
 		//Clustering
-		LloydClusters lloydClusters = new LloydClusters(rgbValues, settings);
+		LloydClusters lloydClusters = new LloydClusters(rgbValues);
 		lloydClusters.runLloydClustering();
 		float[] clusterFeature =  lloydClusters.toFeatureVector();
 		
@@ -103,7 +103,7 @@ public class BaenschFeature extends FeatureFactory
 			edgeFv1[i] = fv1[30+i];
 			edgeFv2[i] = fv2[30+i];
 		}
-		float edgePart = featureWheights[1] * getSquaredChordDistance(edgeFv1, edgeFv2);
+		float edgePart = featureWheights[1] * FullDctEngine.squaredDifferences(edgeFv1, edgeFv2);
 		
 		//Clustering
 		int clusterDim = fv1.length-35;

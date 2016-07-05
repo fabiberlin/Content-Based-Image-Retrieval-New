@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import de.htw.cbir.model.EdgeHistogram;
 import de.htw.cbir.model.Histogram;
 import de.htw.cbir.model.Histogram.HistoValue;
+import de.htw.cbir.model.fullDct.FullDctEngine;
 import de.htw.cbir.model.Pic;
 import de.htw.cbir.model.Settings;
 
@@ -55,7 +56,7 @@ public class EdgeHistogramFeature extends FeatureFactory
 	
 	@Override
 	public float getDistance(float[] fv1, float[] fv2) {
-		return getL1Distance(fv1, fv2);
+		return FullDctEngine.squaredDifferences(fv1, fv2);
 	}
 
 	@Override
