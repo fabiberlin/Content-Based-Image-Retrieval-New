@@ -53,7 +53,6 @@ public class CBIRController {
 	 * @param queryImage
 	 */
 	public void sortByImage(Pic queryImage) {
-
 		// wurde kein ein Sortieralgorithmus ausgewählt
 		if(featureFactory == null) {
 			System.out.println("No sorting algorithm selected");

@@ -40,7 +40,7 @@ public class LloydClusters {
 				this.calcCenterpoints();
 			}
 		}
-		Logger.getGlobal().log(Level.INFO, "Clustering Done");
+		//Logger.getGlobal().log(Level.INFO, "Clustering Done");
 	}
 	
 	public void calcCenterpoints() {

@@ -4,11 +4,11 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
-import de.htw.cbir.model.DctEngine;
 import de.htw.cbir.model.EdgeHistogram;
-import de.htw.cbir.model.FullDctEngine;
 import de.htw.cbir.model.Histogram;
 import de.htw.cbir.model.Histogram.HistoValue;
+import de.htw.cbir.model.blockDct.DctEngine;
+import de.htw.cbir.model.fullDct.FullDctEngine;
 import de.htw.cbir.model.Pic;
 import de.htw.cbir.model.Settings;
 

@@ -5,11 +5,11 @@ import java.awt.image.BufferedImage;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 
-import de.htw.cbir.model.DctEngine;
 import de.htw.cbir.model.EdgeHistogram;
-import de.htw.cbir.model.FullDctEngine;
 import de.htw.cbir.model.Histogram;
 import de.htw.cbir.model.Histogram.HistoValue;
+import de.htw.cbir.model.blockDct.DctEngine;
+import de.htw.cbir.model.fullDct.FullDctEngine;
 import de.htw.cbir.model.ImageProcessingHelper;
 import de.htw.cbir.model.LloydClusters;
 import de.htw.cbir.model.PMHD;
@@ -18,6 +18,7 @@ import de.htw.cbir.model.Settings;
 
 public class BaenschFeature extends FeatureFactory
 {
+	public static float[] featureWheights = {1,5,400};
 
 	public BaenschFeature(Settings settings) {
 		super(settings);
@@ -93,7 +94,7 @@ public class BaenschFeature extends FeatureFactory
 	@Override
 	public float getDistance(float[] fv1, float[] fv2) {
 		//DCT
-		float dctPart = FullDctEngine.compareFeatureVectors(fv1, fv2);
+		float dctPart = featureWheights[0] * FullDctEngine.compareFeatureVectors(fv1, fv2);
 		
 		//Mpg7-Edge
 		float[] edgeFv1 = new float[5];
@@ -101,8 +102,8 @@ public class BaenschFeature extends FeatureFactory
 		for (int i = 0; i < 5; i++) {
 			edgeFv1[i] = fv1[30+i];
 			edgeFv2[i] = fv2[30+i];
-		}		
-		float edgePart = 5* getSquaredChordDistance(edgeFv1, edgeFv2);
+		}
+		float edgePart = featureWheights[1] * getSquaredChordDistance(edgeFv1, edgeFv2);
 		
 		//Clustering
 		int clusterDim = fv1.length-35;
@@ -113,10 +114,9 @@ public class BaenschFeature extends FeatureFactory
 			clusterFv2[i] = fv2[35+i];
 		}		
 		PMHD pmhd = new PMHD(clusterFv1, clusterFv2);
-		float clusterPart = 400 * pmhd.getDistance();	
+		float clusterPart = featureWheights[2] *  pmhd.getDistance();	
 		
-		
-		return edgePart + dctPart + clusterPart;
+		return dctPart + edgePart + clusterPart;
 	}
 
 	@Override

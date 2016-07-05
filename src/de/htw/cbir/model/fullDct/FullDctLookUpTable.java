@@ -1,4 +1,4 @@
-package de.htw.cbir.model;
+package de.htw.cbir.model.fullDct;
 
 import java.util.Arrays;
 

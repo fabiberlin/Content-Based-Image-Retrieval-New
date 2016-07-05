@@ -1,4 +1,4 @@
-package de.htw.cbir.model;
+package de.htw.cbir.model.blockDct;
 
 public class DctBlock {
 	
