@@ -123,7 +123,7 @@ public class CBIRView  {
 
 		// Menupunkt "ClusterIterations"
 		JMenu m_clusterIterationsValue = new JMenu("Cluster Iterations");
-		final JSliderDecimal clusterIterationSlider = JSliderDecimal.createDoubleJSlider(1.0, 12.0, 6.0, 0);
+		final JSliderDecimal clusterIterationSlider = JSliderDecimal.createDoubleJSlider(1.0, 12.0, 2.0, 0);
 		clusterIterationSlider.setMajorTickSpacing(1.0);
 		clusterIterationSlider.setPaintTicks(true);
 		clusterIterationSlider.setPaintLabels(true);

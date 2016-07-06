@@ -13,11 +13,13 @@ import de.htw.cbir.feature.ColorSignaturePHMD;
 import de.htw.cbir.feature.DctHistogramFeature;
 import de.htw.cbir.feature.EdgeHistogramFeature;
 import de.htw.cbir.feature.FeatureFactory;
+import de.htw.cbir.feature.HistogramFeature;
+import de.htw.cbir.model.Histogram;
 import de.htw.cbir.model.Pic;
 import de.htw.cbir.model.Settings;
 import de.htw.cbir.model.fullDct.FullDctFeatureRegion;
 
-public class ClusterTester {
+public class FeatureTester {
 
 	private static String startDirectory = "images";
 	
@@ -26,52 +28,37 @@ public class ClusterTester {
 		//testLlyodPHMD();
 		//testEdge();
 		//testDctWheights(); //Final MAP: 0.32519796 Wheights: [0.19639395, 0.3846143, 0.33273768, 0.31192625]
-
+		//testHistogram();
 		
 	}
-
-	private static void testDctWheights() throws IOException{
-
+	
+	private static void testHistogram() throws IOException{
 		Settings settings = new Settings();
 		final File imageDirectory = askDirectory(startDirectory);
 		PicManager imageManager = new PicManager();
-		imageManager.loadImages(imageDirectory);		
-		FeatureFactory featureFactory = new DctHistogramFeature(settings);
-		for (Pic image : imageManager.getImages()) {
-			image.setFeatureVector(featureFactory.getFeatureVector(image));
-			image.setFeatureImage(featureFactory.getFeatureImage(image));			
-		}
-		//////////////////////////////
-		float[] previousValues = Arrays.copyOf(FullDctFeatureRegion.dctWheights, FullDctFeatureRegion.dctWheights.length);
-		float[] adjustedValues = Arrays.copyOf(FullDctFeatureRegion.dctWheights, FullDctFeatureRegion.dctWheights.length);
-		
-		float bestMAP = getMAP(imageManager, featureFactory);
-		
-		for (int i = 0; i < 2000; i++) {
-			for (int j = 0; j < adjustedValues.length; j++) {
-				adjustedValues[j] = createNewValue(previousValues[j]);
+		imageManager.loadImages(imageDirectory);	
+		/////////////////////////////////////////////////////////////////
+		FeatureFactory featureFactory = new HistogramFeature(settings);
+		float maxMap = 0;
+		String maxS = "";
+		for (int i = 1; i < 16; i++) {
+
+			Settings.numOfHistogramBins = i;
+
+			for (Pic image : imageManager.getImages()) {
+				image.setFeatureVector(featureFactory.getFeatureVector(image));
+				image.setFeatureImage(featureFactory.getFeatureImage(image));			
 			}
-			FullDctFeatureRegion.dctWheights = adjustedValues;
-			System.out.println("Wheights to Check: " + Arrays.toString(FullDctFeatureRegion.dctWheights));
-			float currentMAP = getMAP(imageManager, featureFactory);
-			System.out.println("--> calced MAP: "+currentMAP);
-			if (currentMAP > bestMAP) {
-				// its ok
-				System.out.println("Changed Wheights ( " + currentMAP + " >= " + bestMAP + " )");
-				previousValues = Arrays.copyOf(adjustedValues,adjustedValues.length);
-				bestMAP = currentMAP;
-			} else {
-				//do nothing	
-				System.out.println("Didnt Changed Wheights ( " + currentMAP + " < " + bestMAP + " )");
+			
+			float finalMap = getMAP(imageManager, featureFactory);
+			System.out.println("MAP: "+finalMap+" (numOfHistogramBins: "+Settings.numOfHistogramBins+")");
+			if(finalMap >= maxMap){
+				maxMap = finalMap;
+				maxS = "Best MAP: "+finalMap+" (numOfHistogramBins: "+Settings.numOfHistogramBins+")";
 			}
-			System.out.println("Best Wheights for now: "+Arrays.toString(previousValues));
-			System.out.println();
 			
 		}
-		
-		float finalMap = getMAP(imageManager, featureFactory);
-		System.out.println("Final MAP: "+finalMap+" Wheights: "+Arrays.toString(FullDctFeatureRegion.dctWheights));
-		
+		System.out.println(maxS);
 	}
 
 	private static void testEdge() throws IOException{

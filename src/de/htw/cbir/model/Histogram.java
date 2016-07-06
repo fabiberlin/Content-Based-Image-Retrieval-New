@@ -15,12 +15,16 @@ public class Histogram {
 		return numOfBins * numOfBins * numOfBins;
 	}
 	
+	public void addValues(int[] argb){
+		for (int i = 0; i < argb.length; i++) {
+			addValue(argb[i]);			
+		}
+	}
+	
 	public void addValue (int value){
 		int r =  (value >> 16) & 255;
 		int g =  (value >>  8) & 255;
 		int b =  (value      ) & 255;
-		
-//		System.out.println(r + " " + g + " " + b);
 		
 		double step = 255 / new Double(numOfBins) + 1;
 		

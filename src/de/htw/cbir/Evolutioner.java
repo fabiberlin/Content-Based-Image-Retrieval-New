@@ -41,9 +41,9 @@ public class Evolutioner {
 			System.out.println("Wheights to Check: " + Arrays.toString(BaenschFeature.featureWheights));
 			float currentMAP = getMAP(imageManager, featureFactory);
 			System.out.println("--> calced MAP: "+currentMAP);
-			if (currentMAP >= bestMAP) {
+			if (currentMAP > bestMAP) {
 				// its ok
-				System.out.println("Changed Wheights ( " + currentMAP + " >= " + bestMAP + " )");
+				System.out.println("Changed Wheights ( " + currentMAP + " > " + bestMAP + " )");
 				previousValues = Arrays.copyOf(adjustedValues,adjustedValues.length);
 				bestMAP = currentMAP;
 			} else {
@@ -64,7 +64,7 @@ public class Evolutioner {
 	}
 	
 	private static float createNewValue(float old){
-		return (float) (old + 0.05 * old * (Math.random()*2-1));
+		return (float) (old + 0.2 * Math.random() * old * (Math.random()*2-1));
 	}
 
 	private static float getMAP(PicManager imageManager, FeatureFactory featureFactory) {

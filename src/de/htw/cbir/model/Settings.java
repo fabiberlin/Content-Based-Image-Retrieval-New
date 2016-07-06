@@ -7,8 +7,8 @@ import java.util.Map;
 
 public class Settings {
 	
-	private float saturation = 1;
-	public static int numOfHistogramBins = 2;
+	public static float saturation = 1;
+	public static int numOfHistogramBins = 5;
 	public static int numOfNSquareClusters = 2;
 	public static int numOfClusterIterations = 2;
 	public static float edgeThreshold = 9.0f;

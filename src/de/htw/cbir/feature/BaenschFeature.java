@@ -18,7 +18,9 @@ import de.htw.cbir.model.Settings;
 
 public class BaenschFeature extends FeatureFactory
 {
-	public static float[] featureWheights = {6.033855f, 0.037183005f, 9042.364f};
+	public static float[] featureWheights = {2.5265574f, 0.02037317f, 2.4511764f, 3.042541f};
+	//Final MAP: 0.62855864 Wheights: [2.2356217, 0.02402539, 2.5644462, 2.2609928]
+
 
 	public BaenschFeature(Settings settings) {
 		super(settings);
@@ -84,7 +86,13 @@ public class BaenschFeature extends FeatureFactory
 		lloydClusters.runLloydClustering();
 		float[] clusterFeature =  lloydClusters.toFeatureVector();
 		
+		//Histogram
+		Histogram histogram = new Histogram(Settings.numOfHistogramBins);
+		histogram.addValues(rgbValues);
+		float[] histoFeature = histogram.toFeatureVector();
+		
 		float[] finalFeature = ImageProcessingHelper.concat(dctFeature, edgeFeature);
+		finalFeature = ImageProcessingHelper.concat(finalFeature, histoFeature);
 		finalFeature = ImageProcessingHelper.concat(finalFeature, clusterFeature);
 		
 		return finalFeature;
@@ -105,18 +113,27 @@ public class BaenschFeature extends FeatureFactory
 		}
 		float edgePart = featureWheights[1] * FullDctEngine.squaredDifferences(edgeFv1, edgeFv2);
 		
+		//Histogramm
+		float[] histoFv1 = new float[125];
+		float[] histoFv2 = new float[125];
+		for (int i = 0; i < 125; i++) {
+			histoFv1[i] = fv1[35+i];
+			histoFv2[i] = fv2[35+i];
+		}
+		float histogramPart = featureWheights[2] * getSquaredChordDistance(histoFv1, histoFv2);
+		
 		//Clustering
-		int clusterDim = fv1.length-35;
+		int clusterDim = fv1.length-160;
 		float[] clusterFv1 = new float[clusterDim];
 		float[] clusterFv2 = new float[clusterDim];
 		for (int i = 0; i < clusterDim; i++) {
-			clusterFv1[i] = fv1[35+i];
-			clusterFv2[i] = fv2[35+i];
+			clusterFv1[i] = fv1[160+i];
+			clusterFv2[i] = fv2[160+i];
 		}		
 		PMHD pmhd = new PMHD(clusterFv1, clusterFv2);
-		float clusterPart = featureWheights[2] *  pmhd.getDistance();	
+		float clusterPart = featureWheights[3] *  pmhd.getDistance();	
 		
-		return dctPart + edgePart + clusterPart;
+		return dctPart + edgePart + histogramPart + clusterPart;
 	}
 
 	@Override
