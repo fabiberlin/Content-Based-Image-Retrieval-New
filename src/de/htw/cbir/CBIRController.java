@@ -5,6 +5,7 @@ import java.util.Arrays;
 import de.htw.cbir.evaluation.CBIREvaluation;
 import de.htw.cbir.evaluation.PrecisionRecallTable;
 import de.htw.cbir.feature.BaenschFeature;
+import de.htw.cbir.feature.BlockDctHistogramFeature;
 import de.htw.cbir.feature.ColorMean;
 import de.htw.cbir.feature.ColorMeanSaturation;
 import de.htw.cbir.feature.ColorSignatureHausdorff;
@@ -183,7 +184,7 @@ public class CBIRController {
 			featureFactory = new BaenschFeature(settings);
 		}
 		else if(name.equalsIgnoreCase("BlockDctHistogramFeature")) {
-			featureFactory = new BaenschFeature(settings);
+			featureFactory = new BlockDctHistogramFeature(settings);
 		}
 		// erzeuge die Feature Vektoren
 		if(featureFactory != null)

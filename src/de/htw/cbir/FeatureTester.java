@@ -9,6 +9,7 @@ import javax.swing.JFileChooser;
 
 import de.htw.cbir.evaluation.CBIREvaluation;
 import de.htw.cbir.feature.BaenschFeature;
+import de.htw.cbir.feature.BlockDctHistogramFeature;
 import de.htw.cbir.feature.ColorSignaturePHMD;
 import de.htw.cbir.feature.DctHistogramFeature;
 import de.htw.cbir.feature.EdgeHistogramFeature;
@@ -29,7 +30,38 @@ public class FeatureTester {
 		//testEdge();
 		//testDctWheights(); //Final MAP: 0.32519796 Wheights: [0.19639395, 0.3846143, 0.33273768, 0.31192625]
 		//testHistogram();
+		testBlockDct();
 		
+	}
+	
+	private static void testBlockDct() throws IOException{
+		Settings settings = new Settings();
+		final File imageDirectory = askDirectory(startDirectory);
+		PicManager imageManager = new PicManager();
+		imageManager.loadImages(imageDirectory);	
+		/////////////////////////////////////////////////////////////////
+		FeatureFactory featureFactory = new BlockDctHistogramFeature(settings);
+		float maxMap = 0;
+		String maxS = "";
+		for (int i = 0; i < 300; i++) {
+
+			Settings.dctThreshold = i/new Float(10);
+
+			for (Pic image : imageManager.getImages()) {
+				image.setFeatureVector(featureFactory.getFeatureVector(image));
+				image.setFeatureImage(featureFactory.getFeatureImage(image));			
+			}
+			
+			float finalMap = getMAP(imageManager, featureFactory);
+			System.out.println("MAP: "+finalMap+" (dctThreshold: "+Settings.dctThreshold+")");
+			if(finalMap >= maxMap){
+				maxMap = finalMap;
+				maxS = "Best MAP: "+finalMap+" (dctThreshold: "+Settings.dctThreshold+")";
+			}
+			
+		}
+		System.out.println(maxS);
+		//Best MAP: 0.21432452 (dctThreshold: 1.97)
 	}
 	
 	private static void testHistogram() throws IOException{

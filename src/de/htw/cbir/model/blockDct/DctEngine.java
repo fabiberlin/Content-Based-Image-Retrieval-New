@@ -1,5 +1,7 @@
 package de.htw.cbir.model.blockDct;
 
+import de.htw.cbir.model.Settings;
+
 public class DctEngine {
 	
 	int[] origArgb;
@@ -61,16 +63,19 @@ public class DctEngine {
 	}
 	
 	public void generateHistogram (){
-		histo = new float[64];
+		histo = new float[63];
 		for (int x = 0; x < DctBlock.DIM; x++) {
 			for (int y = 0; y < DctBlock.DIM; y++) {
-				// for num Of Blocks
-				histo[y*DctBlock.DIM + x ] = 0;
-				for (int i = 0; i < dctBlocks.length; i++) {
-					histo[y*DctBlock.DIM + x] += this.dctBlocks[i].getCoeff(x, y);
-				
+				if (!(x==0 && y==0)) {
+					// for num Of Blocks
+					histo[y*DctBlock.DIM + x -1] = 0;
+					for (int i = 0; i < dctBlocks.length; i++) {
+						float coeff = this.dctBlocks[i].getCoeff(x, y);
+						if (Math.abs(coeff) >= Settings.dctThreshold) {
+							histo[y*DctBlock.DIM + x -1] += 1;						
+						}				
+					}					
 				}
-				//histo[y*DctBlock.DIM + x] /= this.dctBlocks.length;
 			}
 		}
 	}

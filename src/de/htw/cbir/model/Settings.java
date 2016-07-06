@@ -12,6 +12,7 @@ public class Settings {
 	public static int numOfNSquareClusters = 2;
 	public static int numOfClusterIterations = 2;
 	public static float edgeThreshold = 9.0f;
+	public static float dctThreshold = 2.5f;
 
 	public float getSaturation() {
 		return saturation;
