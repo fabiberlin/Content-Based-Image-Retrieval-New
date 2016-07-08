@@ -4,6 +4,7 @@ public class Histogram {
 	
 	int numOfBins;
 	int[][][] histrogram; // [R][G][B]
+	int numOfPixel;
 	
 	public Histogram(int numOfBins) {
 		super();
@@ -16,11 +17,12 @@ public class Histogram {
 	}
 	
 	public void addValues(int[] argb){
+		this.numOfPixel = argb.length;
 		for (int i = 0; i < argb.length; i++) {
 			addValue(argb[i]);			
 		}
 	}
-	
+
 	public void addValue (int value){
 		int r =  (value >> 16) & 255;
 		int g =  (value >>  8) & 255;
@@ -43,7 +45,7 @@ public class Histogram {
 			for (int g = 0; g < numOfBins; g++) {
 				for (int b = 0; b < numOfBins; b++) {
 //					System.out.println("pos: " + pos);
-					featureVector[pos] = histrogram[r][g][b];
+					featureVector[pos] = histrogram[r][g][b] / new Float(numOfPixel);
 					pos++;
 				}
 			}

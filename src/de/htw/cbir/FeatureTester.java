@@ -29,8 +29,8 @@ public class FeatureTester {
 		//testLlyodPHMD();
 		//testEdge();
 		//testDctWheights(); //Final MAP: 0.32519796 Wheights: [0.19639395, 0.3846143, 0.33273768, 0.31192625]
-		//testHistogram();
-		testBlockDct();
+		testHistogram();
+		//testBlockDct();
 		
 	}
 	
