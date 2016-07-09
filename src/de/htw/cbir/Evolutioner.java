@@ -26,11 +26,9 @@ public class Evolutioner {
 		for (Pic image : imageManager.getImages()) {
 			image.setFeatureVector(featureFactory.getFeatureVector(image));
 			image.setFeatureImage(featureFactory.getFeatureImage(image));			
-		}
-		
+		}		
 		float[] previousValues = Arrays.copyOf(BaenschFeature.featureWheights, BaenschFeature.featureWheights.length);
 		float[] adjustedValues = Arrays.copyOf(BaenschFeature.featureWheights, BaenschFeature.featureWheights.length);
-		
 		float bestMAP = getMAP(imageManager, featureFactory);
 		
 		for (int i = 0; i < 2000; i++) {
@@ -51,20 +49,14 @@ public class Evolutioner {
 				System.out.println("Didnt Changed Wheights ( " + currentMAP + " < " + bestMAP + " )");
 			}
 			System.out.println("Best Wheights for now: "+Arrays.toString(previousValues));
-			System.out.println();
-			
-		}
-		
+			System.out.println();	
+		}		
 		float finalMap = getMAP(imageManager, featureFactory);
 		System.out.println("Final MAP: "+finalMap+" Wheights: "+Arrays.toString(BaenschFeature.featureWheights));
-	
-		//
-		// Final MAP: 0.55638903 Wheights: [6.033855, 0.037183005, 9042.364]
-		//
 	}
 	
 	private static float createNewValue(float old){
-		return (float) (old + 0.2 * Math.random() * old * (Math.random()*2-1));
+		return (float) (old + 0.1 * Math.random() * old * (Math.random()*2-1));
 	}
 
 	private static float getMAP(PicManager imageManager, FeatureFactory featureFactory) {
@@ -89,7 +81,6 @@ public class Evolutioner {
 		// Nur komplette Ordner koennen ausgewaehlt werden
 		fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		final int returnVal = fc.showOpenDialog(null);
-
 		if (returnVal != JFileChooser.APPROVE_OPTION)
 			System.exit(-1);
 
