@@ -11,7 +11,7 @@ public class Settings {
 	public static int numOfHistogramBins = 5;
 	public static int numOfNSquareClusters = 2;
 	public static int numOfClusterIterations = 2;
-	public static float edgeThreshold = 9.0f;
+	public static float edgeThreshold = 7.0f;
 	public static float dctThreshold = 2.5f;
 
 	public float getSaturation() {

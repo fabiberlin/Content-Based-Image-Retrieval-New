@@ -62,7 +62,8 @@ public class EdgeHistogram {
 		}
 		
 		for (int i = 0; i < histogram.length; i++) {
-			normalizedHistogram[i] = histogram[i]/maxValue;
+//			normalizedHistogram[i] = histogram[i]/maxValue;
+			normalizedHistogram[i] = histogram[i]/(width*height);
 		}		
 	}
 }
