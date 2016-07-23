@@ -27,10 +27,10 @@ public class FeatureTester {
 	public static void main(String[] args) throws IOException {
 		
 		//testLlyodPHMD();
-		testEdge();
+		//testEdge();
 		//testDctWheights(); //Final MAP: 0.32519796 Wheights: [0.19639395, 0.3846143, 0.33273768, 0.31192625]
 		//testHistogram();
-		//testBlockDct();
+		testBlockDct();
 		
 	}
 	
@@ -43,9 +43,9 @@ public class FeatureTester {
 		FeatureFactory featureFactory = new BlockDctHistogramFeature(settings);
 		float maxMap = 0;
 		String maxS = "";
-		for (int i = 0; i < 300; i++) {
+		for (int i = 0; i < 1; i++) {
 
-			Settings.dctThreshold = i/new Float(10);
+			Settings.dctThreshold = i/new Float(1);
 
 			for (Pic image : imageManager.getImages()) {
 				image.setFeatureVector(featureFactory.getFeatureVector(image));

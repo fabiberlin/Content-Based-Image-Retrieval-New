@@ -60,7 +60,8 @@ public class BlockDctHistogramFeature extends FeatureFactory
 	
 	@Override
 	public float getDistance(float[] fv1, float[] fv2) {
-		return FullDctEngine.compareFeatureVectors(fv1, fv2);
+//		return getSquaredChordDistance(fv1, fv2);
+		return getL2Distance(fv1, fv2);
 	}
 
 	@Override

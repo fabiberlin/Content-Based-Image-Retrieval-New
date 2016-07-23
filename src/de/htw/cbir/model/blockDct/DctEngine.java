@@ -1,5 +1,7 @@
 package de.htw.cbir.model.blockDct;
 
+import java.util.Arrays;
+
 import de.htw.cbir.model.Settings;
 
 public class DctEngine {
@@ -63,21 +65,28 @@ public class DctEngine {
 	}
 	
 	public void generateHistogram (){
-		histo = new float[63];
+		int pos = 0;
+		histo = new float[128];
 		for (int x = 0; x < DctBlock.DIM; x++) {
 			for (int y = 0; y < DctBlock.DIM; y++) {
-				if (!(x==0 && y==0)) {
-					// for num Of Blocks
-					histo[y*DctBlock.DIM + x -1] = 0;
-					for (int i = 0; i < dctBlocks.length; i++) {
-						float coeff = this.dctBlocks[i].getCoeff(x, y);
-						if (Math.abs(coeff) >= Settings.dctThreshold) {
-							histo[y*DctBlock.DIM + x -1] += 1;						
-						}				
-					}					
+				// for num Of Blocks
+				for (int i = 0; i < dctBlocks.length; i++) {
+					float coeff = this.dctBlocks[i].getCoeff(x, y);
+					int shiftedPos;
+					if (coeff <= 0) {
+						shiftedPos = pos + 64;
+					} else {
+						shiftedPos = pos;
+					}
+					histo[shiftedPos] += coeff;
 				}
+				pos++;
 			}
 		}
+		for (int i = 0; i < histo.length; i++) {
+			histo[i] /= dctBlocks.length;
+		}
+		System.out.println(Arrays.toString(histo));
 	}
 	
 	public void normalizeHistogram() {
