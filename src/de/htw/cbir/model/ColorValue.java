@@ -5,6 +5,9 @@ public class ColorValue{
 	public int g;
 	public int b;
 	
+	public float x;
+	public float y;
+	
 	public int amount;
 	
 	public ColorValue(){

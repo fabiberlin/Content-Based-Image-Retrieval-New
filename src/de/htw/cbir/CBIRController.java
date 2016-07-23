@@ -13,6 +13,7 @@ import de.htw.cbir.feature.ColorSignaturePHMD;
 import de.htw.cbir.feature.DctHistogramFeature;
 import de.htw.cbir.feature.EdgeHistogramFeature;
 import de.htw.cbir.feature.FeatureFactory;
+import de.htw.cbir.feature.HistoDistanceFeature;
 import de.htw.cbir.feature.HistogramFeature;
 import de.htw.cbir.model.Pic;
 import de.htw.cbir.model.PicPair;
@@ -120,7 +121,8 @@ public class CBIRController {
 	public String[] getFeatureFactoryNames() {
 		return new String[] { "ColorMean", "ColorMeanSaturation", "HistogramFeature", 
 				"ColorSignatureHausdorff", "ColorSignaturePHMD", "EdgeHistogramFeature",
-				"DctHistogramFeature", "BaenschFeature", "BlockDctHistogramFeature"};
+				"DctHistogramFeature", "BaenschFeature", "BlockDctHistogramFeature", 
+				"HistoDistanceFeature"};
 	}
 	
 	/**
@@ -185,6 +187,9 @@ public class CBIRController {
 		}
 		else if(name.equalsIgnoreCase("BlockDctHistogramFeature")) {
 			featureFactory = new BlockDctHistogramFeature(settings);
+		}
+		else if(name.equalsIgnoreCase("HistoDistanceFeature")) {
+			featureFactory = new HistoDistanceFeature(settings);
 		}
 		// erzeuge die Feature Vektoren
 		if(featureFactory != null)
