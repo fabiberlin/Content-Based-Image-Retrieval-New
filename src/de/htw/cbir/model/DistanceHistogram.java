@@ -91,16 +91,9 @@ public class DistanceHistogram {
 		float dist = 0;
 		for (int i = 0; i < fv1.length; i+=3) {
 			double buff = Math.sqrt(fv1[i]) - Math.sqrt(fv2[i]);
-//			System.out.println("X 1 "+fv1[i+1]);
-//			System.out.println("Y 1 "+fv1[i+2]);
-//			System.out.println("X 2 "+fv2[i+1]);
-//			System.out.println("Y 2 "+fv2[i+2]);
 			float distanceFromCenterPoints = (float) Math.sqrt((fv1[i+1]-fv2[i+1])*(fv1[i+1]-fv2[i+1])+(fv1[i+2]-fv2[i+2])*(fv1[i+2]-fv2[i+2]));
-			//System.out.println(distanceFromCenterPoints);
 			distanceFromCenterPoints = (float) ((-1/Math.sqrt(2))*distanceFromCenterPoints+1);
-			dist += distanceFromCenterPoints*(buff*buff);
-//			System.out.println(distanceFromCenterPoints);
-//			dist+=buff*buff;
+			dist += (distanceFromCenterPoints+1)*(buff*buff);
 		}
 		return dist;
 	}

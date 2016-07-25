@@ -14,6 +14,7 @@ import de.htw.cbir.feature.ColorSignaturePHMD;
 import de.htw.cbir.feature.DctHistogramFeature;
 import de.htw.cbir.feature.EdgeHistogramFeature;
 import de.htw.cbir.feature.FeatureFactory;
+import de.htw.cbir.feature.HistoDistanceFeature;
 import de.htw.cbir.feature.HistogramFeature;
 import de.htw.cbir.model.Histogram;
 import de.htw.cbir.model.Pic;
@@ -29,11 +30,54 @@ public class FeatureTester {
 		//testLlyodPHMD();
 		//testEdge();
 		//testDctWheights(); //Final MAP: 0.32519796 Wheights: [0.19639395, 0.3846143, 0.33273768, 0.31192625]
-		//testHistogram();
-		testBlockDct();
+		testHistogram();
+		//testDistanceHistogram();
+		//testBlockDct();
 		
 	}
 	
+	private static void testDistanceHistogram() throws IOException {
+		Settings settings = new Settings();
+		final File imageDirectory = askDirectory(startDirectory);
+		PicManager imageManager = new PicManager();
+		imageManager.loadImages(imageDirectory);	
+		/////////////////////////////////////////////////////////////////
+		/**
+		 	MAP: 0.047440797 (numOfHistogramBins: 1)
+			MAP: 0.45241612 (numOfHistogramBins: 2)
+			MAP: 0.5461781 (numOfHistogramBins: 3)
+			MAP: 0.55250484 (numOfHistogramBins: 4)
+			MAP: 0.5535956 (numOfHistogramBins: 5)
+			MAP: 0.5457065 (numOfHistogramBins: 6)
+			MAP: 0.5317276 (numOfHistogramBins: 7)
+			MAP: 0.51839125 (numOfHistogramBins: 8)
+			MAP: 0.51433975 (numOfHistogramBins: 9)
+			MAP: 0.5075679 (numOfHistogramBins: 10)
+		 */
+		FeatureFactory featureFactory = new HistoDistanceFeature(settings);
+		float maxMap = 0;
+		String maxS = "";
+		for (int i = 1; i < 16; i++) {
+
+			Settings.numOfHistogramBins = i;
+
+			for (Pic image : imageManager.getImages()) {
+				image.setFeatureVector(featureFactory.getFeatureVector(image));
+				image.setFeatureImage(featureFactory.getFeatureImage(image));			
+			}
+			
+			float finalMap = getMAP(imageManager, featureFactory);
+			System.out.println("MAP: "+finalMap+" (numOfHistogramBins: "+Settings.numOfHistogramBins+")");
+			if(finalMap >= maxMap){
+				maxMap = finalMap;
+				maxS = "Best MAP: "+finalMap+" (numOfHistogramBins: "+Settings.numOfHistogramBins+")";
+			}
+			
+		}
+		System.out.println(maxS);
+		
+	}
+
 	private static void testBlockDct() throws IOException{
 		Settings settings = new Settings();
 		final File imageDirectory = askDirectory(startDirectory);
@@ -70,6 +114,18 @@ public class FeatureTester {
 		PicManager imageManager = new PicManager();
 		imageManager.loadImages(imageDirectory);	
 		/////////////////////////////////////////////////////////////////
+		/**
+		 	MAP: 0.047440797 (numOfHistogramBins: 1)
+			MAP: 0.47093093 (numOfHistogramBins: 2)
+			MAP: 0.57562184 (numOfHistogramBins: 3)
+			MAP: 0.58866304 (numOfHistogramBins: 4)
+			MAP: 0.5947595 (numOfHistogramBins: 5)
+			MAP: 0.5871637 (numOfHistogramBins: 6)
+			MAP: 0.577903 (numOfHistogramBins: 7)
+			MAP: 0.5679039 (numOfHistogramBins: 8)
+			MAP: 0.56190693 (numOfHistogramBins: 9)
+			MAP: 0.5581122 (numOfHistogramBins: 10)
+		 */
 		FeatureFactory featureFactory = new HistogramFeature(settings);
 		float maxMap = 0;
 		String maxS = "";
