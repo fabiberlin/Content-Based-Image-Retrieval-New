@@ -2,7 +2,7 @@ package de.htw.cbir.model.blockDct;
 
 public class DctBlock {
 	
-	static final int DIM = 8;
+	static final int DIM = 4;
 	
 	private int[][] argb;
 	private float[][] coeffs;

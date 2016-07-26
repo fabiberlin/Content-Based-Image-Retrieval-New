@@ -122,7 +122,7 @@ public class CBIRController {
 		return new String[] { "ColorMean", "ColorMeanSaturation", "HistogramFeature", 
 				"ColorSignatureHausdorff", "ColorSignaturePHMD", "EdgeHistogramFeature",
 				"DctHistogramFeature", "BaenschFeature", "BlockDctHistogramFeature", 
-				"HistoDistanceFeature"};
+				"HistoDistanceFeature", "BlockEdgeHistogramFeature"};
 	}
 	
 	/**
@@ -189,6 +189,9 @@ public class CBIRController {
 			featureFactory = new BlockDctHistogramFeature(settings);
 		}
 		else if(name.equalsIgnoreCase("HistoDistanceFeature")) {
+			featureFactory = new HistoDistanceFeature(settings);
+		}
+		else if(name.equalsIgnoreCase("BlockEdgeHistogramFeature")) {
 			featureFactory = new HistoDistanceFeature(settings);
 		}
 		// erzeuge die Feature Vektoren
