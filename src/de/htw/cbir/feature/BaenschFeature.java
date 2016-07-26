@@ -18,7 +18,8 @@ import de.htw.cbir.model.Settings;
 
 public class BaenschFeature extends FeatureFactory
 {
-	public static float[] featureWheights = {0.094359875f, 0.015009696f, 17288.816f, 642.3941f}; //--> 0.62938446
+	public static float[] featureWheights = {0.09794467f, 0.016906321f, 22558.873f, 797.40936f, 7.789051f};
+//	public static float[] featureWheights = {0.094359875f, 0.015009696f, 17288.816f, 642.3941f}; //--> 0.62938446
 //	public static float[] featureWheights = {0.028136322f, 1.8306704E-4f, 255.6206f, 7.2671905f};
 
 	public BaenschFeature(Settings settings) {
@@ -90,10 +91,13 @@ public class BaenschFeature extends FeatureFactory
 		histogram.addValues(rgbValues);
 		float[] histoFeature = histogram.toFeatureVector();
 		
+		float[] entropy = {(float) ImageProcessingHelper.getEntropyBW(ImageProcessingHelper.getAsGreyScale(rgbValues))};
+		
 		float[] finalFeature = ImageProcessingHelper.concat(dctFeature, edgeFeature);
 		finalFeature = ImageProcessingHelper.concat(finalFeature, histoFeature);
 		finalFeature = ImageProcessingHelper.concat(finalFeature, clusterFeature);
-		
+		finalFeature = ImageProcessingHelper.concat(finalFeature, entropy);
+//System.out.println(finalFeature);
 		return finalFeature;
 	}
 	
@@ -122,7 +126,7 @@ public class BaenschFeature extends FeatureFactory
 		float histogramPart = featureWheights[2] * getSquaredChordDistance(histoFv1, histoFv2);
 		
 		//Clustering
-		int clusterDim = fv1.length-160;
+		int clusterDim = fv1.length-161;
 		float[] clusterFv1 = new float[clusterDim];
 		float[] clusterFv2 = new float[clusterDim];
 		for (int i = 0; i < clusterDim; i++) {
@@ -130,9 +134,17 @@ public class BaenschFeature extends FeatureFactory
 			clusterFv2[i] = fv2[160+i];
 		}		
 		PMHD pmhd = new PMHD(clusterFv1, clusterFv2);
-		float clusterPart = featureWheights[3] *  pmhd.getDistance();	
+		float clusterPart = featureWheights[3] *  pmhd.getDistance();
+		
+		
+		float[] entfv1 = {fv1[fv1.length-1]};
+		float[] entfv2 = {fv2[fv2.length-1]};
+		
+		
+		float entropyPart = featureWheights[4] * getL2Distance(entfv1, entfv2);
 		
 		return dctPart + edgePart + histogramPart + clusterPart;
+		
 	}
 
 	@Override

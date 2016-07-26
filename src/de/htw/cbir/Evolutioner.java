@@ -56,7 +56,7 @@ public class Evolutioner {
 	}
 	
 	private static float createNewValue(float old){
-		return (float) (old + 1 * Math.random() * old * (Math.random()*2-1));
+		return (float) (old + 0.3 * Math.random() * old * (Math.random()*2-1));
 	}
 
 	private static float getMAP(PicManager imageManager, FeatureFactory featureFactory) {
